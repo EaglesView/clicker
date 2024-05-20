@@ -33,8 +33,8 @@ end
 local function click()
     bindEarly:Fire(Template.click.clickrate)
     local moneyPlus = logic.clickAmt()
-    local newMoney = logic.addMoney(moneyPlus)
     task.wait(Template.click.clickrate)
+    local newMoney = logic.addMoney(moneyPlus)
     bindMoney:Fire(newMoney)
 end
 function logic.enoughMoney(money,amt)

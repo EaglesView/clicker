@@ -30,11 +30,11 @@ end
 
 
 bindEarly.Event:Connect(function(waitTime)
+    print("in event")
     GuiModule.clickReaction(waitTime)
 end)
 
 bindMoney.Event:Connect(function(amount)
-
     GuiModule.updateMoneyOnScreen(moneyLabel,amount)
 end)
 

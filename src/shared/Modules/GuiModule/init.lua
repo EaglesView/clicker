@@ -11,7 +11,6 @@ local backEnd = require(script.guiBackbone)
 local colors = require(script.colors)
 local transitions = require(script.tweenInfo)
 local shakeAmt = 3
-local mainGarden = CollectionService:GetTagged("gardenRoot")
 --fonctions utiles pour les boutons upgrade
 function gui.updateButton() -- Mettre a jour les infos du bouton
     
@@ -41,11 +40,13 @@ function gui.createClickGuiFrames(template : table)
     end
 end
 function gui.clickReaction(waitTime)
+    local mainGarden = CollectionService:GetTagged("gardenRoot")
     for _,garden in pairs(mainGarden) do
+        print("in function")
         local size = garden.Size
-        backEnd.changePartColorSize(garden,colors.colorPalette1.col3,waitTime,size*1.05)
+        backEnd.changeModelColorSize(garden,colors.colorPalette1.col3,waitTime,size*1.1)
         task.wait(waitTime)
-        backEnd.changePartColorSize(garden,colors.colorPalette1.col4,0.1,size)
+        backEnd.changeModelColorSize(garden,colors.colorPalette1.col4,0.1,size)
     end
 end
 function gui.updateMoneyOnScreen(label,newAmt)

@@ -65,7 +65,7 @@ function back.buttonPurchaseAnimationFailure(purchaseButton,failureColor,shakeAm
         shakeCount = shakeCount + 1
     end
 end
-function back.changePartColorSize(part,color,transitionTime,size)
+function back.changeModelColorSize(part,color,transitionTime,size)
     local goal = {}
     goal.Color = color
     goal.Size = size
