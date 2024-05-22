@@ -31,7 +31,28 @@ col.purchaseButton = {
     textFailure = Color3.fromRGB(221, 208, 208)
 }
 
-
+col.button_upgrade = {
+    activated = {
+        bg = Color3.fromRGB(22, 219, 101),
+        tx = Color3.fromRGB(4, 71, 28),
+    },
+    inactive_canAfford = {
+        bg = Color3.fromRGB(5, 140, 66),
+        tx = Color3.fromRGB(2, 2, 2),
+    },
+    inactive_canNotAfford = {
+        bg = Color3.fromRGB(13, 40, 24),
+        tx = Color3.fromRGB(188, 71, 73),
+    }, 
+    disabled = {
+        bg =Color3.fromRGB(49, 49, 49),
+        tx = Color3.fromRGB(26,26,26)
+    },
+    failure = {
+        bg = Color3.fromRGB(188, 71, 73),
+        tx = Color3.fromRGB(221, 208, 208)
+    }
+}
 
 
 

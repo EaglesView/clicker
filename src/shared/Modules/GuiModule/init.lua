@@ -15,13 +15,16 @@ local shakeAmt = 3
 function gui.updateButton() -- Mettre a jour les infos du bouton
     
 end
-function gui.purchaseButtonClicked(button :TextButton,enoughMoney : boolean)  
+function gui.purchaseButtonClicked(button :TextButton,enoughMoney : boolean, clicked : boolean)
+
     if enoughMoney then
-        backEnd.buttonPurchaseAnimationSuccess(button,colors.purchaseButton.active,transitions.buttonClick,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut)
+        backEnd.buttonPurchaseAnimationSuccess(button,colors.button_upgrade,transitions.transitions.buttonClick,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut)
     else
-        backEnd.buttonPurchaseAnimationFailure(button,colors.purchaseButton.failure,shakeAmt,transitions.buttonFailure,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut)
+        backEnd.buttonPurchaseAnimationFailure(button,colors.button_upgrade,transitions.transitions.buttonFailure,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut)
     end
 end
+    
+
 function gui.createClickGuiFrames(template : table)
     print(template)
     for upID, upgrades in pairs(template.click.upgrades) do
@@ -37,7 +40,9 @@ function gui.createClickGuiFrames(template : table)
         newFrame.LayoutOrder = upgrades.order
         newFrame:SetAttribute("ID",upID)
         newFrame.Parent = guim.ScrollingFrame
+        backEnd.button_init(btn,colors.button_upgrade,template.click.upgrades,template.money.amount)
     end
+    
 end
 function gui.clickReaction(waitTime)
     local mainGarden = CollectionService:GetTagged("gardenRoot")

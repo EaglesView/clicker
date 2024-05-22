@@ -16,16 +16,29 @@ local player = game.Players.LocalPlayer
 local gui = player.PlayerGui.SGUI_Main.SGUI_Game
 local moneyLabel = gui.moneyFrame.moneyLabel
 
-
-for buttonID,btn in pairs(CollectionService:GetTagged("guiButtons")) do
+local clicked = false
+for _,btn in pairs(CollectionService:GetTagged("guiButtons")) do
     btn.Activated:Connect(function()
-        local par = btn.Parent
-        local ID = par:GetAttribute("ID")
-        local typeOf = par:GetAttribute("TypeOfUpgrade")
+        if not clicked then
+            clicked = true
+            local par = btn.Parent
+            local ID = par:GetAttribute("ID")
+            local typeOf = par:GetAttribute("TypeOfUpgrade")
+            local priceOf = logic.returnUpgradePrice(ID,typeOf)
+            if logic.enoughMoney(priceOf) then
+                GuiModule.purchaseButtonClicked(btn,true)
+                --spend money here
+            else
+                GuiModule.purchaseButtonClicked(btn,false)
+                --not enough money
+            end
+            task.wait(0.126) --temporary
+            clicked = false
+        end
         
+
     end)
 end
-
 
 
 

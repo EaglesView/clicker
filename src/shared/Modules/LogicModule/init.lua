@@ -17,6 +17,17 @@ function logic.clickAmt()
     print(ans.."is the answer of clickAmt")
     return ans
 end
+function logic.returnUpgradePrice(ID,typeOf)  --Returns back the Proper Upgrade from the Template
+    return Template[typeOf].upgrades[ID].upgradePrice
+end
+function logic.newUpgradePrice()
+    
+end
+function logic.buyUpgrade(typeOf,ID)
+    --price has already been checked
+    Template.money.amount = Template.money.amount - Template[typeOf].upgrades[ID].upgradePrice
+    Template[typeOf].upgrades[ID].upgradePrice = 
+end
 function logic.round(amt)
     if amt%1 == 0 then
         amt = amt..".00"
@@ -37,8 +48,8 @@ local function click()
     local newMoney = logic.addMoney(moneyPlus)
     bindMoney:Fire(newMoney)
 end
-function logic.enoughMoney(money,amt)
-    if money >= amt then
+function logic.enoughMoney(amt)
+    if logic.cash >= amt then
         return true
     else
         return false

@@ -1,7 +1,7 @@
 local tw = {}
 
 tw.transitions = {
-    buttonClick = 0.2,
+    buttonClick = 0.125,
     buttonFailure = 0.1,
     colorChange = 0.1,
 

@@ -39,33 +39,50 @@ function back.changeTextColor(guiItem,newColor,transitionTime,easingStyle)
     end
 end
 
-function back.buttonPurchaseAnimationSuccess(purchaseButton,successColor,transitionTime,easingStyle,easingDirection)
-    local goal1 = {}
-    goal1.Rotation = 5
-    goal1.BackgroundColor3 = successColor
-    local twInfo = TweenInfo.new(transitionTime,easingStyle,easingDirection)
-    local tween = TweenService:Create(purchaseButton,twInfo,goal1)
-    tween:Play()
+function back.button_setColor(item : Instance,colorScheme : table)
+    item.BackgroundColor3 = colorScheme.bg
+    item.TextColor3 = colorScheme.tx
 end
-function back.buttonPurchaseAnimationFailure(purchaseButton,failureColor,shakeAmt,transitionTime,easingStyle,easingDirection)
-    local goal1 = {}
-    local goal2 = {}
-    goal1.Rotation = 5
-    goal2.Rotation = -5
-    goal1.BackgroundColor3 = failureColor
-    local twInfo = TweenInfo.new(transitionTime,easingStyle,easingDirection)
-    local tween = TweenService:Create(purchaseButton,twInfo,goal1)
-    local tweenBack = TweenService:Create(purchaseButton,twInfo,goal2)
-    local shakeCount = 1
-    while shakeCount > shakeAmt do
-        tween:Play()
-        task.wait()
-        tweenBack:Play()
-        task.wait()
-        shakeCount = shakeCount + 1
+
+function back.button_init(button : Instance,colPaletteButton : table, priceOf : number, money : number)
+    local par = button.Parent
+    local ID = par:GetAttribute("ID")
+    if money >= priceOf[ID].upgradePrice then
+        back.button_setColor(button,colPaletteButton.inactive_canAfford)
+    else
+        back.button_setColor(button,colPaletteButton.inactive_canNotAfford)
     end
 end
-function back.changeModelColorSize(part,color,transitionTime,size)
+
+function back.button_initAllColor(buttons : table,colPaletteButton : table, money : number, upgradePrices : table)
+    for _,btns in pairs(buttons) do
+        back.button_init(btns,colPaletteButton,upgradePrices,money)
+    end
+end
+function back.buttonPurchaseAnimationSuccess(purchaseButton,colorT : table,transitionTime : number,easingStyle,easingDirection)
+    local goal1 = {}
+    goal1.BackgroundColor3 = colorT.activated.bg
+    goal1.TextColor3 = colorT.activated.tx
+    local twInfo = TweenInfo.new(transitionTime,easingStyle,easingDirection,0,true)
+    local tween = TweenService:Create(purchaseButton,twInfo,goal1)
+    tween:Play()
+    task.wait(transitionTime)
+    --[[
+        TEMPORARY. WILL NEED TO UPDATE TO THE NEW PRICE TO BE PROPERLY ADJUSTED
+    ]]
+    back.button_setColor(purchaseButton,colorT.inactive_canAfford)
+end
+function back.buttonPurchaseAnimationFailure(purchaseButton,colorT : table,transitionTime : number,easingStyle,easingDirection)
+    local goal1 = {}
+    goal1.BackgroundColor3 = colorT.failure.bg
+    goal1.TextColor3 = colorT.failure.tx
+    local twInfo = TweenInfo.new(transitionTime,easingStyle,easingDirection,0,true)
+    local tween = TweenService:Create(purchaseButton,twInfo,goal1)
+    tween:Play()
+    task.wait(transitionTime)
+    back.button_setColor(purchaseButton,colorT.inactive_canNotAfford)
+end
+function back.changeModelColorSize(part,color,transitionTime : number,size)
     local goal = {}
     goal.Color = color
     goal.Size = size
